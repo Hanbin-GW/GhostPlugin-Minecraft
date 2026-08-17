@@ -1,5 +1,6 @@
 package com.ghostworld.tutorial.ghostplugin_minecraft;
 
+import com.ghostworld.tutorial.ghostplugin_minecraft.Factory.CustomItemFactory;
 import com.ghostworld.tutorial.ghostplugin_minecraft.Listener.PlayerJoinListener;
 import com.ghostworld.tutorial.ghostplugin_minecraft.Manager.DynamicLightManager;
 import org.bukkit.event.HandlerList;
@@ -30,6 +31,8 @@ public final class Ghostplugin_minecraft extends JavaPlugin {
 
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+
+        CustomItemFactory.init(this);
     }
 
     @Override

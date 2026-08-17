@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -16,8 +17,10 @@ public class CustomItemFactory {
         plugin = pl;
     }
     // PDC keys & values
-    private static final String VAL_SHOTGUN_ARROW_BOW = "SHOTGUN_ARROW_BOW";
     private static final String KEY_ITEM_TYPE = "gw_item_type";
+    private static final String VAL_SHOTGUN_ARROW_BOW = "SHOTGUN_ARROW_BOW";
+    private static final String VAL_BAT_type1 = "BAT_t1";
+    private static final String VAL_BAT_type2 = "BAT_t2";
 
     public static ItemStack createShotgunArrow() {
         ItemStack item = new ItemStack(Material.BOW);
@@ -27,9 +30,32 @@ public class CustomItemFactory {
 
             // PDC 관련 코드는 필요에 따라 주석을 해제하거나 유지하세요.
             // ...
-            tag(meta);
+            tag(meta, VAL_SHOTGUN_ARROW_BOW);
 
             // 🔴 이 부분의 주석(//)을 제거하여 활성화합니다.
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    public static ItemStack createBat_t1() {
+        ItemStack item = new ItemStack(Material.WOODEN_SWORD);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.displayName(Component.text("Bat_Type1").color(NamedTextColor.LIGHT_PURPLE));
+            tag(meta, VAL_BAT_type1);
+            item.setItemMeta(meta);
+        }
+        return item;
+    }
+
+    public static ItemStack createBat_t2() {
+        ItemStack item = new ItemStack(Material.WOODEN_SWORD);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.displayName(Component.text("Bat_Type2").color(NamedTextColor.AQUA));
+            tag(meta, VAL_BAT_type2);
+            item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 100);
             item.setItemMeta(meta);
         }
         return item;
@@ -38,12 +64,12 @@ public class CustomItemFactory {
     // ─────────────────────────────────────────────────────────────────────
     // PDC util
     // ─────────────────────────────────────────────────────────────────────
-    private static void tag(ItemMeta meta) {
+    private static void tag(ItemMeta meta, String value) {
         // 이제 상단에 선언한 전역 변수 덕분에 plugin 을 정상적으로 인식합니다!
         if (plugin == null) return;
 
         NamespacedKey key = new NamespacedKey(plugin, KEY_ITEM_TYPE);
-        meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, CustomItemFactory.VAL_SHOTGUN_ARROW_BOW);
+        meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, value);
     }
 
     public static String readTag(ItemStack item) {
@@ -57,4 +83,13 @@ public class CustomItemFactory {
         return VAL_SHOTGUN_ARROW_BOW.equals(t);
     }
 
+    public static boolean isBatT1(ItemStack item) {
+        String t = readTag(item);
+        return VAL_BAT_type1.equals(t);
+    }
+
+    public static boolean isBatT2(ItemStack item) {
+        String t = readTag(item);
+        return VAL_BAT_type2.equals(t);
+    }
 }

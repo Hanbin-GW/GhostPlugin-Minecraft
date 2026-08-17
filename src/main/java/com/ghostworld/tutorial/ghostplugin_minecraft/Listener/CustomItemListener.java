@@ -6,6 +6,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Location;
@@ -39,5 +40,35 @@ public class CustomItemListener implements Listener {
                 arrow.setVelocity(spread.multiply(2.0));
             }
         }
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player victim)) return;
+        if (!(event.getDamager() instanceof Player attacker)) return;
+        ItemStack weapon = event.getDamager().getPickItemStack();
+        if(CustomItemFactory.isBatT1(weapon)) {
+            Vector direction = victim.getLocation()
+                    .toVector()
+                    .subtract(attacker.getLocation().toVector())
+                    .normalize();
+
+            direction.setY(0.5); // 위로 띄우는 힘
+            direction.multiply(2.0); // 뒤로 날아가는 힘
+
+            victim.setVelocity(direction);
+        }
+
+//        if(CustomItemFactory.isBatT2(weapon)) {
+//            Vector direction = victim.getLocation()
+//                    .toVector()
+//                    .subtract(attacker.getLocation().toVector())
+//                    .normalize();
+//
+//            direction.setY(0.5); // 위로 띄우는 힘
+//            direction.multiply(2.0); // 뒤로 날아가는 힘
+//
+//            victim.setVelocity(direction);
+//        }
     }
 }

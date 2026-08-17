@@ -26,8 +26,13 @@ public class CustomItemCommand implements CommandExecutor {
         ItemStack item = null;
 
         switch (itemType) {
-            case "drill":
-                player.sendMessage("제작중...");
+            case "b1":
+                item = CustomItemFactory.createBat_t1();
+                player.sendMessage("빠따 1타입 제공완료");
+                break;
+            case "b2":
+                item = CustomItemFactory.createBat_t2();
+                player.sendMessage("빠다 2타입 제공완료");
                 break;
             case "shotgun":
                 item = CustomItemFactory.createShotgunArrow();
@@ -37,7 +42,6 @@ public class CustomItemCommand implements CommandExecutor {
                 player.sendMessage("알 수 없는 아이템 종류입니다. 사용법: /giveitem <sword|drill|shotgun|bfc>");
                 return true;
         }
-        assert item != null;
         player.getInventory().addItem(item);
         return true;
     }

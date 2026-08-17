@@ -5,7 +5,7 @@ api-version: '1.21'
 authors: [ Hanbin-GW ]
 website: https://www.ghost-world.co.kr/
 commands:
-  ItemCommand: # 대소문자까지 Ghostplugin_minecraft.java에 적은 문자열과 정확히 일치해야 합니다.
-    description: 아이템 명령어입니다.
+  GiveCustomItem:
+    description: "커스텀 아이템을 지급하는 명령어입니다."
     permission: ghostplugin.item
-    usage: /ItemCommand
+    usage: /GiveCustomItem

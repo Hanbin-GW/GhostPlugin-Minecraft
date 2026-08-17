@@ -34,11 +34,16 @@ public final class Ghostplugin_minecraft extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
-        var ItemCommand = getCommand("GiveCustomItem");
+        var itemCommand = getCommand("GiveCustomItem");
         CustomItemFactory.init(this);
-        
-        var ItemCommands = new CustomItemCommand();
-        ItemCommand.setExecutor(ItemCommands);
+
+        if (itemCommand != null) {
+            var itemCommands = new CustomItemCommand();
+            itemCommand.setExecutor(itemCommands);
+            getLogger().info("GiveCustomItem 명령어가 성공적으로 등록되었습니다.");
+        } else {
+            getLogger().severe("❌ 에러: plugin.yml에서 'GiveCustomItem' 명령어를 찾을 수 없습니다!");
+        }
     }
 
     @Override

@@ -1,0 +1,6 @@
+name: ghostplugin_minecraft
+version: '1.0-SNAPSHOT'
+main: com.ghostworld.tutorial.ghostplugin_minecraft.Ghostplugin_minecraft
+api-version: '1.21'
+authors: [ Hanbin-GW ]
+website: https://www.ghost-world.co.kr/

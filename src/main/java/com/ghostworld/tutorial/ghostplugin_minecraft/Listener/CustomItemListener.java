@@ -1,6 +1,7 @@
 package com.ghostworld.tutorial.ghostplugin_minecraft.Listener;
 
 import com.ghostworld.tutorial.ghostplugin_minecraft.Factory.CustomItemFactory;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -10,9 +11,15 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class CustomItemListener implements Listener {
+    private final JavaPlugin plugin;
+    public CustomItemListener(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
     @EventHandler
     public void onShoot(EntityShootBowEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
@@ -46,29 +53,27 @@ public class CustomItemListener implements Listener {
     public void onDamage(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player victim)) return;
         if (!(event.getDamager() instanceof Player attacker)) return;
-        ItemStack weapon = event.getDamager().getPickItemStack();
-        if(CustomItemFactory.isBatT1(weapon)) {
-            Vector direction = victim.getLocation()
-                    .toVector()
-                    .subtract(attacker.getLocation().toVector())
-                    .normalize();
 
-            direction.setY(0.5); // 위로 띄우는 힘
-            direction.multiply(2.0); // 뒤로 날아가는 힘
+        ItemStack weapon = attacker.getInventory().getItemInMainHand();
 
-            victim.setVelocity(direction);
-        }
+        if (CustomItemFactory.isBatT1(weapon)) {
+            victim.addPotionEffect(new org.bukkit.potion.PotionEffect(PotionEffectType.NAUSEA, 7, 1));
 
-//        if(CustomItemFactory.isBatT2(weapon)) {
-//            Vector direction = victim.getLocation()
+//                     Vector direction = victim.getLocation()
 //                    .toVector()
 //                    .subtract(attacker.getLocation().toVector())
 //                    .normalize();
 //
-//            direction.setY(0.5); // 위로 띄우는 힘
-//            direction.multiply(2.0); // 뒤로 날아가는 힘
+//            // 수평으로 날아가는 힘
+//            direction.multiply(100.0);
 //
-//            victim.setVelocity(direction);
-//        }
+//            // 위로 뜨는 힘
+//            direction.setY(3.0);
+//
+//            // 1틱 뒤에 적용해서 기본 Minecraft 넉백이 덮어쓰지 않도록 함
+//            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+//                victim.setVelocity(direction);
+//            }, 1L);
+        }
     }
 }

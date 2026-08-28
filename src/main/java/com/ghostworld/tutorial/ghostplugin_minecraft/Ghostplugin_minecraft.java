@@ -33,7 +33,7 @@ public final class Ghostplugin_minecraft extends JavaPlugin {
 
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
+        getServer().getPluginManager().registerEvents(new CustomItemListener(this), this);
         var itemCommand = getCommand("GiveCustomItem");
         CustomItemFactory.init(this);
 

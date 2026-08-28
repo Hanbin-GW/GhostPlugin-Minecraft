@@ -5,10 +5,18 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.List;
 
 public class CustomItemFactory {
     private static Ghostplugin_minecraft plugin;
@@ -39,10 +47,25 @@ public class CustomItemFactory {
     }
 
     public static ItemStack createBat_t1() {
-        ItemStack item = new ItemStack(Material.WOODEN_SWORD);
+        ItemStack item = new ItemStack(Material.IRON_SWORD);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.displayName(Component.text("Bat_Type1").color(NamedTextColor.LIGHT_PURPLE));
+            AttributeModifier damageModifier = new AttributeModifier(
+                    NamespacedKey.minecraft("generic.attack_damage"),
+                    -3.0,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlotGroup.HAND
+            );
+            meta.lore(List.of(
+                    Component.text("정신을 몽롱하게 만드는 야구방망이 입니다!")
+                            .color(NamedTextColor.GRAY),
+                    Component.text("공격력: +3")
+                            .color(NamedTextColor.RED),
+                    Component.text("등급: 희귀")
+                            .color(NamedTextColor.LIGHT_PURPLE)
+            ));
+            meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             tag(meta, VAL_BAT_type1);
             item.setItemMeta(meta);
         }
@@ -55,7 +78,7 @@ public class CustomItemFactory {
         if (meta != null) {
             meta.displayName(Component.text("Bat_Type2").color(NamedTextColor.AQUA));
             tag(meta, VAL_BAT_type2);
-            item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 100);
+            item.addEnchantment(Enchantment.KNOCKBACK, 255);
             item.setItemMeta(meta);
         }
         return item;

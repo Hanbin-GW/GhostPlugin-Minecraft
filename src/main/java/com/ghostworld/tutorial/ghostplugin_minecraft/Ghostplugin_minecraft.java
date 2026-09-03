@@ -4,6 +4,7 @@ import com.ghostworld.tutorial.ghostplugin_minecraft.Command.CustomItemCommand;
 import com.ghostworld.tutorial.ghostplugin_minecraft.Factory.CustomItemFactory;
 import com.ghostworld.tutorial.ghostplugin_minecraft.Listener.CustomItemListener;
 import com.ghostworld.tutorial.ghostplugin_minecraft.Listener.PlayerJoinListener;
+import com.ghostworld.tutorial.ghostplugin_minecraft.Manager.CustomRecipeManager;
 import com.ghostworld.tutorial.ghostplugin_minecraft.Manager.DynamicLightManager;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,6 +31,7 @@ public final class Ghostplugin_minecraft extends JavaPlugin {
                 """);
         dynamicLightManager = new DynamicLightManager(this);
         dynamicLightManager.start();
+        new CustomRecipeManager(this).registerRecipe();
 
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);

@@ -18,7 +18,7 @@ public class CustomItemCommand implements CommandExecutor {
             return false;
         }
         if (strings.length == 0) {
-            player.sendMessage("아이템 종류를 입력해주세요. 사용법: /giveitem <sword|drill>");
+            player.sendMessage("아이템 종류를 입력해주세요. 사용법: /GiveCustomItem <sword|shotgun>");
             return true;
         }
 
@@ -39,7 +39,7 @@ public class CustomItemCommand implements CommandExecutor {
                 player.sendMessage("산탄 화살이 지금되었습니다!");
                 break;
             default:
-                player.sendMessage("알 수 없는 아이템 종류입니다. 사용법: /giveitem <sword|drill|shotgun|bfc>");
+                player.sendMessage("알 수 없는 아이템 종류입니다. 사용법: /GiveCustomItem <...>");
                 return true;
         }
         player.getInventory().addItem(item);

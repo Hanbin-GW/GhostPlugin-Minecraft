@@ -16,6 +16,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CustomItemListener implements Listener {
     private final JavaPlugin plugin;
     public CustomItemListener(JavaPlugin plugin) {
@@ -86,6 +89,19 @@ public class CustomItemListener implements Listener {
 //            Bukkit.getScheduler().runTaskLater(plugin, () -> {
 //                victim.setVelocity(direction);
 //            }, 1L);
+        }
+
+        if (CustomItemFactory.isBatT2(weapon))
+        {
+            victim.addPotionEffect(new org.bukkit.potion.PotionEffect(PotionEffectType.NAUSEA, 7, 1));
+            if (CustomItemFactory.isBatT1(weapon)) {
+                victim.addPotionEffects(Arrays.asList(
+                        new PotionEffect(PotionEffectType.NAUSEA, 7, 1), // 7초(140틱), 증폭 1
+                        new PotionEffect(PotionEffectType.BLINDNESS, 5 , 1) // 예시: 실명 5초 추가 가능
+                ));
+
+                event.setDamage(1);
+            }
         }
     }
 }

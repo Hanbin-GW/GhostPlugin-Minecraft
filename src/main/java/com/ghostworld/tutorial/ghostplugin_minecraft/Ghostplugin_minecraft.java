@@ -31,13 +31,15 @@ public final class Ghostplugin_minecraft extends JavaPlugin {
                 """);
         dynamicLightManager = new DynamicLightManager(this);
         dynamicLightManager.start();
-        new CustomRecipeManager(this).registerRecipe();
 
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new CustomItemListener(this), this);
         var itemCommand = getCommand("GiveCustomItem");
         CustomItemFactory.init(this);
+
+        CustomRecipeManager recipeManager = new CustomRecipeManager(this);
+        recipeManager.registerRecipe();
 
         if (itemCommand != null) {
             var itemCommands = new CustomItemCommand();
